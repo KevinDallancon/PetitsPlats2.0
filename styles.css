@@ -1,0 +1,106 @@
+header {
+  background-image: url('images/lampos-aritonang-24gR_9lCdes-unsplash\ 1.png');
+  height: 960px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+header h1 {
+  color: #FFD15B;
+  text-align: center;
+  max-width: 890px;
+}
+header img {
+  width: 207px;
+  height: 25px;
+  position: absolute;
+  top: 40px; 
+  left: 40px; 
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+}
+
+.search-container {
+  width: 100%;
+  max-width: 950px;
+}
+
+.search-form {
+  position: relative;
+  width: 100%;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 72px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 40px 10px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+  font-size: 16px;
+}
+
+.search-button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  background-image: url('images/Property 1=Default.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: none;
+  cursor: pointer;
+}
+
+.search-button:hover {
+  background-image: url(images/Property\ 1=Default.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.recettes_section {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 70px;
+  margin-top: 100px;
+  
+}
+
+.recettes_section article {
+  width: 380px;
+  height: 731px;
+  border: 1px solid red;
+  justify-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 21px;
+
+}
+
+.recettes_section article img {
+  height: 253px;
+  width: 100%;
+  object-fit: cover;
+}

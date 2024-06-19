@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Les petits plats</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <img src="./images/Logo.png" alt="">
+    <div class="container">
+      <h1>CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</h1>
+      <div class="search-container">
+        <form action="/search" method="GET" class="search-form">
+            <input type="text" placeholder="Rechercher une recette, un ingrédient, ..." name="search" class="search-input">
+            <button type="submit" class="search-button"></button>
+        </form>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="recettes_section"></div>
+  </main>
+  <script type="module" src="data/recipes.js"></script>
+  <script type="module" src="scripts/pages/index.js"></script>
+</body>
+</html>

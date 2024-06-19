@@ -10,10 +10,14 @@ export function recetteTemplate (data) {
     const img = document.createElement('img')
     img.setAttribute('src', picture)
     img.setAttribute('alt', name)
+
+    // Creation d'une div container
+    const divContainer = document.createElement('div')
+    divContainer.classList.add('recette-container')
+
     // Creation du titre de la recette
     const h2 = document.createElement('h2')
     h2.textContent = name
-
     // Creation de la div Description
     const divDescription = document.createElement('div')
     // Titre de la recette
@@ -31,16 +35,32 @@ export function recetteTemplate (data) {
     // Liste des ingrédients
     const ulIngredient = document.createElement('ul');
     ingredients.forEach(ingredient => {
-      const li = document.createElement('li')
-      li.textContent = `${ingredient.ingredient} ${ingredient.quantity}`;
-      ulIngredient.appendChild(li)
+      const li = document.createElement('li');
+
+      // Créez un élément span pour le nom de l'ingrédient
+      const ingredientName = document.createElement('span');
+      ingredientName.textContent = ingredient.ingredient;
+      ingredientName.classList.add('ingredient-name')
+
+      // Créez un élément span pour la quantité
+      const ingredientQuantity = document.createElement('span');
+      ingredientQuantity.textContent = ingredient.quantity ? `${ingredient.quantity}` : '';
+      ingredientQuantity.classList.add('ingredient-quantity')
+
+      // Ajoutez les spans à l'élément li
+      li.appendChild(ingredientName);
+      li.appendChild(ingredientQuantity);
+
+      // Ajoutez l'élément li à la liste ul
+      ulIngredient.appendChild(li);
     });
 
     // // Ajout des elements au dom
     article.appendChild(img)
-    article.appendChild(h2)
-    article.appendChild(divDescription)
-    article.appendChild(divIngredient)
+    article.appendChild(divContainer)
+    divContainer.appendChild(h2)
+    divContainer.appendChild(divDescription)
+    divContainer.appendChild(divIngredient)
     divDescription.appendChild(titleDescription)
     divDescription.appendChild(descriptionRecette)
     divIngredient.appendChild(titleIngredient)

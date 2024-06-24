@@ -1,15 +1,24 @@
 export function recetteTemplate (data) {
   const { id, image, name, servings, ingredients, time, description, appliance, ustensils } = data
 
-  const picture = `assets/${image}`
+  const picture = `./assets/${image}`
 
   function getCardDOM () {
 
     const article = document.createElement('article')
+
+    const imgContainer = document.createElement('div')
+    imgContainer.classList.add('img-container')
+    
     // Creation de l'image de la recette
     const img = document.createElement('img')
     img.setAttribute('src', picture)
     img.setAttribute('alt', name)
+
+    // Creation du time
+    const elementTime = document.createElement('span')
+    elementTime.classList.add('time')
+    elementTime.textContent = time + "min";
 
     // Creation d'une div container
     const divContainer = document.createElement('div')
@@ -20,6 +29,7 @@ export function recetteTemplate (data) {
     h2.textContent = name
     // Creation de la div Description
     const divDescription = document.createElement('div')
+    divDescription.classList.add('recette-description')
     // Titre de la recette
     const titleDescription = document.createElement('h3')
     titleDescription.textContent = "RECETTE"
@@ -29,6 +39,7 @@ export function recetteTemplate (data) {
 
     // Creation de la div Ingredient
     const divIngredient = document.createElement('div')
+    divIngredient.classList.add('recette-ingredient')
     // Titre de l'ingredient 
     const titleIngredient = document.createElement('h3')
     titleIngredient.textContent = "INGREDIENTS"
@@ -56,15 +67,18 @@ export function recetteTemplate (data) {
     });
 
     // // Ajout des elements au dom
-    article.appendChild(img)
+    article.appendChild(imgContainer)
     article.appendChild(divContainer)
     divContainer.appendChild(h2)
     divContainer.appendChild(divDescription)
     divContainer.appendChild(divIngredient)
+    imgContainer.appendChild(img)
+    imgContainer.appendChild(elementTime)
     divDescription.appendChild(titleDescription)
     divDescription.appendChild(descriptionRecette)
     divIngredient.appendChild(titleIngredient)
     divIngredient.appendChild(ulIngredient)
+    
 
     return (article)
   }

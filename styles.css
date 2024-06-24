@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  font-family: "Manrope", sans-serif;
 }
 
 header {
@@ -84,6 +85,7 @@ form {
 
 main {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: #EDEDED;
@@ -102,22 +104,36 @@ main {
   border-radius: 21px;
   margin-bottom: 50px;
   background: #FFFFFF;
-
+  position: relative;
 }
-
 .recettes_section article img {
   height: 253px;
   width: 380px;
   object-fit: cover;
   border-top-left-radius: 21px;
   border-top-right-radius: 21px;
+
+}
+
+.img-container span {
+  background-color: #FFD15B;
+  position: absolute;
+  width: 40px;
+  top: 21px;
+  left: 295px;
+  padding: 5px 15px 5px 15px;
+  gap: 10px;
+  border-radius: 14px;
+  text-align: center;
+  font-size: 12px;
 }
 
 .recette-container {
-  width: 360px;
-  padding: 10px;
+  width: 340px;
+  padding: 20px;
 }
 .recette-container h2 {
+  font-family: "Anton", sans-serif;
   font-size: 18px;
   color: #000000;
 }
@@ -130,6 +146,7 @@ main {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
+  padding: 0;
 }
 .recette-container li {
   list-style-type: none;
@@ -138,6 +155,13 @@ main {
   display: flex;
   flex-direction: column;
 }
+
+.recette-description {
+  height: 130px;
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
+
 .ingredient-name {
   font-size: 14px;
   color: #1B1B1B;
@@ -145,4 +169,44 @@ main {
 .ingredient-quantity {
   color:#7A7A7A;
   font-size: 14px;
+}
+
+#total-recettes {
+  color: black;
+  font-size: 21px;
+  font-family: "Anton", sans-serif;
+}
+
+.tag-bar {
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.tag-flex {
+  width: 600px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.tag-style {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #FFFFFF;
+  padding: 17px;
+  height: 56px;
+  border-radius: 11px;
+  cursor: pointer;
+}
+
+.tag-style p {
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+  margin-right: 10px;
 }

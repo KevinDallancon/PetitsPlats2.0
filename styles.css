@@ -1,3 +1,5 @@
+@import url('tag.css');
+
 body {
   margin: 0;
   font-family: "Manrope", sans-serif;
@@ -92,7 +94,7 @@ main {
   ;
 }
 .recettes_section {
-  width: 70%;
+  width: 90%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -177,36 +179,9 @@ main {
   font-family: "Anton", sans-serif;
 }
 
-.tag-bar {
-  width: 70%;
+.flex {
+  margin-top: 50px;
+  width: 90%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-top: 30px;
-}
-
-.tag-flex {
-  width: 600px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-}
-
-.tag-style {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #FFFFFF;
-  padding: 17px;
-  height: 56px;
-  border-radius: 11px;
-  cursor: pointer;
-}
-
-.tag-style p {
-  font-size: 16px;
-  font-weight: 500;
-  text-align: center;
-  margin-right: 10px;
 }

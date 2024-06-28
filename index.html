@@ -25,32 +25,23 @@
     </div>
   </header>
   <main>
-    <div class="tag-bar">
-      <div class="tag-flex">
-        <div id="total-ingredient" class="tag-style">
-          <p>
-          Ingrédients
-          </p>
-          <i class="fa-solid fa-chevron-up"></i>
-        </div>
-        <div id="total-appareils" class="tag-style">
-          <p>
-            Appareils
-          </p>
-          <i class="fa-solid fa-chevron-up"></i>
-        </div>
-        <div id="total-ustensiles" class="tag-style">
-          <p>
-            Ustensiles
-          </p>
-          <i class="fa-solid fa-chevron-up"></i>
+    <div class="flex">
+      <div id="tag-ingredient">
+        <button onclick="toggleDropdown()" class="dropbtn">Ingrédients <i id="dropdownIcon" class="fa-solid fa-chevron-down"></i></button>
+        <div id="myDropdown" class="dropdown-content">
+          <input type="text" placeholder="" id="myInput" onkeyup="filterFunction()">
+          <div id="ingredientList"></div>
         </div>
       </div>
       <div id="total-recettes"></div>
     </div>
     <div class="recettes_section"></div>
   </main>
-  <script type="module" src="data/recipes.js"></script>
-  <script type="module" src="scripts/pages/index.js"></script>
+  <script type="module" src="../scripts/pages/index.js"></script>
+  <script src="../scripts/pages/tag.js"></script>
+  <script src="../scripts/pages/search.js"></script>
+
 </body>
 </html>
+
+

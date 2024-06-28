@@ -2,6 +2,7 @@
 import { recipes } from '../../data/recipes.js';
 import { recetteTemplate } from '../templates/recettes.js'
 
+
 function getRecipes() {
   return recipes;
 }
@@ -27,6 +28,8 @@ function updateTotal(total) {
 async function init() {
   const recettes = await getRecipes()
   displayData(recettes)
+  search(recettes)
+  totalIngredient(recettes)
 }
 
 init()

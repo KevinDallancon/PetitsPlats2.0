@@ -82,5 +82,6 @@ export function recetteTemplate (data) {
 
     return (article)
   }
+
   return { getCardDOM }
 }

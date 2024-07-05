@@ -46,44 +46,49 @@ header img {
 }
 
 .search-form {
+  display: flex;
+  align-items: center;
   position: relative;
   width: 100%;
-}
-
-form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 72px;
 }
 
 .search-input {
   width: 100%;
-  padding: 10px 40px 10px 10px;
+  height: 72px;
   border: 1px solid #ccc;
   border-radius: 4px 0 0 4px;
   font-size: 16px;
 }
 
-.search-button {
+.removeIcon {
   position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 32px;
-  height: 32px;
-  background-image: url('images/Property 1=Default.png');
-  background-repeat: no-repeat;
-  background-size: contain;
+  right: 80px;
   border: none;
   cursor: pointer;
 }
 
-.search-button:hover {
-  background-image: url(images/Property\ 1=Default.png);
-  background-repeat: no-repeat;
-  background-size: contain;
+.removeIcon {
+  font-size: 1.5em;
 }
+
+.searchIcon {
+  position: absolute;
+  right: 10px;
+  border: none;
+  cursor: pointer;
+  background-color:#1B1B1B;
+  border-radius: 10px;
+  width: 51px;
+}
+.searchIcon i {
+  color: white;
+  width: 100%;
+  font-size: 1.5em;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 
 main {
   display: flex;

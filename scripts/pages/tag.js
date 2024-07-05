@@ -1,36 +1,54 @@
-function totalIngredient(dataIngredients) {
+function totalIngredient(recipes) {
   const filterSection = document.getElementById('ingredientList');
   filterSection.innerHTML = ''; // Vider le contenu précédent
 
   // Utiliser un Set pour s'assurer que les ingrédients sont uniques
   const ingredientsSet = new Set();
+  console.log(ingredientsSet);
 
   // Parcourir chaque recette pour extraire les ingrédients
-  dataIngredients.forEach(dataIngredient => {
-    dataIngredient.ingredients.forEach(ing => {
-      const ingredientName = ing.ingredient.trim().toLowerCase();
+  recipes.forEach(recipesIngredients => {
+    recipesIngredients.ingredients.forEach(ingredient => {
+      const ingredientName = ingredient.ingredient.trim().toLowerCase();
       ingredientsSet.add(ingredientName);
     });
   });
 
-  // Parcourir l'ensemble des ingrédients uniques et les ajouter à la liste déroulante
-  ingredientsSet.forEach(ingredient => {
-    const a = document.createElement('a');
-    a.textContent = capitalizeFirstLetter(ingredient);
-    a.href = "#";
+  // Convertir le Set en tableau pour un filtrage plus facile
+  const ingredientsArray = Array.from(ingredientsSet);
 
-        // Créez une icône de croix
-    const icon = document.createElement('i');
-    icon.className = 'fa fa-times'; // Utilise Font Awesome pour l'icône de croix
-    icon.style.marginLeft = '10px'; // Optionnel : ajoutez un peu d'espace avant l'icône
+  // Fonction pour afficher les ingrédients filtrés
+  function displayIngredients(filteredIngredients) {
+    filterSection.innerHTML = '';
+    filteredIngredients.forEach(ingredient => {
+      const a = document.createElement('a');
+      a.textContent = capitalizeFirstLetter(ingredient);
+      a.href = "#";
 
-    icon.addEventListener('click', function(event) {
-      event.preventDefault(); 
-      filterSection.removeChild(a); 
+      // Créez une icône de croix
+      const icon = document.createElement('i');
+      icon.className = 'fa fa-times'; 
+      icon.style.marginLeft = '10px'; 
+
+      icon.addEventListener('click', function(event) {
+        event.preventDefault(); 
+        filterSection.removeChild(a); 
+      });
+
+      a.appendChild(icon);
+      filterSection.appendChild(a);
     });
+  }
 
-    a.appendChild(icon);
-    filterSection.appendChild(a);
+  // Afficher tous les ingrédients au départ
+  displayIngredients(ingredientsArray);
+
+  // Ajouter un événement input pour filtrer les ingrédients
+  const input = document.getElementById('myInput');
+  input.addEventListener('input', function() {
+    const query = input.value.trim().toLowerCase();
+    const filteredIngredients = ingredientsArray.filter(ingredient => ingredient.includes(query));
+    displayIngredients(filteredIngredients);
   });
 }
 
@@ -39,7 +57,6 @@ function capitalizeFirstLetter(string) {
 }
 
 function toggleDropdown() {
-  
   const dropdown = document.getElementById("myDropdown");
   const icon = document.getElementById("dropdownIcon");
   const button = document.querySelector('.dropbtn')

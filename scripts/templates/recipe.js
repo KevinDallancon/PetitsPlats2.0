@@ -1,4 +1,4 @@
-export function recetteTemplate (data) {
+function recipeTemplate (data) {
   const { id, image, name, servings, ingredients, time, description, appliance, ustensils } = data
 
   const picture = `./assets/${image}`
@@ -6,7 +6,8 @@ export function recetteTemplate (data) {
   function getCardDOM () {
 
     const article = document.createElement('article')
-
+    article.classList.add('cards')
+    
     const imgContainer = document.createElement('div')
     imgContainer.classList.add('img-container')
     

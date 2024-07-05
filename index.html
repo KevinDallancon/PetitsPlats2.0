@@ -17,19 +17,21 @@
     <div class="container">
       <h1>CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</h1>
       <div class="search-container">
-        <form action="/search" method="GET" class="search-form">
+        <div class="search-form">
             <input type="text" placeholder="Rechercher une recette, un ingrédient, ..." name="search" class="search-input">
-            <button type="submit" class="search-button"></button>
-        </form>
+            <div class="removeIcon"> <i class="fa-solid fa-times"></i></div>
+            <div  class="searchIcon"> <i class="fa-solid fa-search"></i></div>
+        </div>
       </div>
     </div>
   </header>
   <main>
     <div class="flex">
       <div id="tag-ingredient">
-        <button onclick="toggleDropdown()" class="dropbtn">Ingrédients <i id="dropdownIcon" class="fa-solid fa-chevron-down"></i></button>
+        <button onclick="toggleDropdown()" class="dropbtn">Ingrédients 
+          <i id="dropdownIcon" class="fa-solid fa-chevron-down"></i></button>
         <div id="myDropdown" class="dropdown-content">
-          <input type="text" placeholder="" id="myInput" onkeyup="filterFunction()">
+          <input type="text" placeholder="" id="myInput">
           <div id="ingredientList"></div>
         </div>
       </div>
@@ -37,10 +39,11 @@
     </div>
     <div class="recettes_section"></div>
   </main>
-  <script type="module" src="../scripts/pages/index.js"></script>
-  <script src="../scripts/pages/tag.js"></script>
-  <script src="../scripts/pages/search.js"></script>
-
+  <script src="./data/recipes.js"></script>
+  <script src="./scripts/templates/recipe.js"></script>
+  <script src="./scripts/pages/tag.js"></script>
+  <script src="./scripts/pages/index.js"></script>
+  <script src="./scripts/pages/search.js"></script>
 </body>
 </html>
 

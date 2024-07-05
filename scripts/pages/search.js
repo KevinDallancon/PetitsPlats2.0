@@ -6,9 +6,9 @@ searchInput.addEventListener('input', function(e){
   e.preventDefault();
   //Rajouter le controle necessaire pour executer la recherche simple
   if(this.value.length > 2){
-    simpleSearch(this.value);
-    // actualiser le dom avec les finctions dejà coder
-    
+    const filteredRecipes = simpleSearch(this.value);
+    // Mettre à jour l'affichage avec les recettes filtrées
+    displayData(filteredRecipes);
   }
 });
 
@@ -20,26 +20,25 @@ removeIcon.addEventListener('click', function() {
 
 function simpleSearch(inputValue) {
   
-  const lowercaseQuery = inputValue.toLowerCase();
+  const lowerCaseInput = inputValue.toLowerCase();
 
   // Filtrer les recettes qui correspondent à la requête
   const filteredRecipes = recipes.filter(recipe => {
     // Vérifier si le nom de la recette correspond
-    if (recipe.name.toLowerCase().includes(lowercaseQuery)) {
+    if (recipe.name.toLowerCase().includes(lowerCaseInput)) {
       return true;
     }
 
     // Vérifier si la description correspond
-    if (recipe.description.toLowerCase().includes(lowercaseQuery)) {
+    if (recipe.description.toLowerCase().includes(lowerCaseInput)) {
       return true;
     }
 
     // Vérifier si l'un des ingrédients correspond
     return recipe.ingredients.some(ingredient => 
-      ingredient.ingredient.toLowerCase().includes(lowercaseQuery)
+      ingredient.ingredient.toLowerCase().includes(lowerCaseInput)
     );
   });
-  // Mettre à jour l'affichage avec les recettes filtrées
-  displayData(filteredRecipes);
+  return filteredRecipes;
 }
 

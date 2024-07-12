@@ -20,6 +20,8 @@ function updateTotal(total) {
 function init() {
   displayData(filtredRecipes);
   totalIngredient(filtredRecipes)
+  totalAppareil(filtredRecipes)
+  totalUstensile(filtredRecipes)
 }
 
 init()

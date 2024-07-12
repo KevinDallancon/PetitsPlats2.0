@@ -24,7 +24,7 @@
 
 
 /* Champ de recherche */
-#myInput {
+.flex input {
   box-sizing: border-box;
   background-image: url('./images/search.png');
   background-position: right 10px center; /* Positionner l'image à droite */
@@ -38,7 +38,7 @@
 }
 
 /* Champ de recherche lorsqu'il est focalisé/cliqué */
-#myInput:focus {outline: 3px solid #ddd;}
+.flex input:focus {outline: 3px solid #ddd;}
 
 /* Conteneur <div> - nécessaire pour positionner le contenu du menu déroulant */
 .dropdown {

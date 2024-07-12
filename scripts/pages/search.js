@@ -4,12 +4,17 @@ const searchIcon = document.querySelector('.searchIcon');
 
 searchInput.addEventListener('input', function(e){
   e.preventDefault();
+
+  if(e.inputType == "deleteContentBackward")
+  filtredRecipes = recipes;
+
   //Rajouter le controle necessaire pour executer la recherche simple
-  if(this.value.length > 2){
-    const filteredRecipes = simpleSearch(this.value);
-    // Mettre à jour l'affichage avec les recettes filtrées
-    displayData(filteredRecipes);
+  if(this.value.length > 2){ 
+    filtredRecipes = simpleSearch(this.value, filtredRecipes);
   }
+
+  // Mettre à jour l'affichage avec les recettes filtrées
+  displayData(filtredRecipes);
 });
 
 // Event listener pour l'icône de suppression
@@ -18,27 +23,45 @@ removeIcon.addEventListener('click', function() {
   displayData(recipes);
 });
 
-function simpleSearch(inputValue) {
+function simpleSearch(inputValue, listRecipes) {
   
   const lowerCaseInput = inputValue.toLowerCase();
 
   // Filtrer les recettes qui correspondent à la requête
-  const filteredRecipes = recipes.filter(recipe => {
+  const result = listRecipes.filter(recipe =>   
     // Vérifier si le nom de la recette correspond
-    if (recipe.name.toLowerCase().includes(lowerCaseInput)) {
-      return true;
-    }
+    (recipe.name.toLowerCase().includes(lowerCaseInput) || 
+      recipe.description.toLowerCase().includes(lowerCaseInput) ||
+      recipe.ingredients.some(ingredient => 
+      ingredient.ingredient.toLowerCase().includes(lowerCaseInput))
+  ));
 
-    // Vérifier si la description correspond
-    if (recipe.description.toLowerCase().includes(lowerCaseInput)) {
-      return true;
-    }
-
-    // Vérifier si l'un des ingrédients correspond
-    return recipe.ingredients.some(ingredient => 
-      ingredient.ingredient.toLowerCase().includes(lowerCaseInput)
-    );
-  });
-  return filteredRecipes;
+  return result;
 }
 
+function advancedSearch(inputIngredients, inputUstensiles, inputAppareil, listRecipes) {
+  // Filtrer les recettes en fonction des critères de recherche avancée
+  const result = listRecipes.filter(recipe => {
+    // Vérifier si les ingrédients correspondent
+    const ingredientsCheck = inputIngredients.every(ingredient =>
+      recipe.ingredients.some(recipeIngredient =>
+        recipeIngredient.toLowerCase().includes(ingredient.toLowerCase())
+      )
+    );
+
+    // Vérifier si les ustensiles correspondent
+    const ustensilesCheck = inputUstensiles.every(ustensile =>
+      recipe.ustensiles.some(recipeUstensile =>
+        recipeUstensile.toLowerCase().includes(ustensile.toLowerCase())
+      )
+    );
+
+    // Vérifier si l'appareil correspond
+    const appareilCheck = recipe.appareil.toLowerCase().includes(inputAppareil.toLowerCase());
+
+    // Retourner true si tous les critères de recherche avancée correspondent
+    return ingredientsCheck && ustensilesCheck && appareilCheck;
+  });
+
+  return result;
+}

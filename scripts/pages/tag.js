@@ -164,8 +164,8 @@ function capitalizeFirstLetter(string) {
 
 function toggleDropdown(dropdownId) {
   const dropdown = document.getElementById(dropdownId);
-  const icon = document.getElementById("dropdownIcon");
-  const button = document.querySelector('.dropbtn')
+  const button = dropdown.previousElementSibling;
+  const icon = button.querySelector('i');
 
   dropdown.classList.toggle("show");
 

@@ -1,13 +1,13 @@
 /* Dropdown Button */
 .dropbtn {
+  width: 200px;
+  height: 56px;
   display: flex;
   justify-content: space-between;
-  background: #FFFFFF;
+  background: #ffffff;
   color: black;
   border: none;
   cursor: pointer;
-  width: 195px;
-  height: 56px;
   top: 20px;
   left: 20px;
   padding: 17px 16px 17px 16px;
@@ -22,61 +22,58 @@
   border-radius: 11px 11px 0 0;
 }
 
-
 /* Champ de recherche */
-.flex input {
+.total-tags input {
   box-sizing: border-box;
-  background-image: url('./images/search.png');
+  background-image: url("./images/search.png");
   background-position: right 10px center; /* Positionner l'image à droite */
   background-size: 20px 20px; /* Redimensionner l'image */
   background-repeat: no-repeat;
   font-size: 16px;
-  border: 1px solid #C6C6C6;
+  border: 1px solid #c6c6c6;
   width: 90%;
   height: 36px;
   margin-left: 10px;
+  margin-bottom: 10px;
 }
 
 /* Champ de recherche lorsqu'il est focalisé/cliqué */
-.flex input:focus {outline: 3px solid #ddd;}
+.total-tags input:focus {
+  outline: 3px solid #ddd;
+}
 
 /* Conteneur <div> - nécessaire pour positionner le contenu du menu déroulant */
 .dropdown {
   position: relative;
   display: inline-block;
+  width: auto;
 }
 
 /* Contenu du menu déroulant (caché par défaut) */
 .dropdown-content {
+  width: 200px;
+  height: 315px;
   display: none;
   position: absolute;
-  background-color: #FFFFFF;
-  width: 195px;
-  height: 315px;
+  background-color: #ffffff;
   border-radius: 0 0 11px 11px;
   z-index: 1;
   overflow: auto; /* Permet le défilement */
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
 }
 
 /* Liens à l'intérieur du menu déroulant */
 .dropdown-content a {
-  color: #1B1B1B;
+  color: #1b1b1b;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
 }
 
-/* couleur des liens du menu déroulant au survol */
-.dropdown-content a:hover {
-  background-color: #FFD15B;
-  font-weight: 800;
-}
-
 /* Afficher le menu déroulant */
 .show {
-  display:block;
+  display: block;
 }
 
 /* Changer l'icône au survol */
@@ -87,4 +84,71 @@
   border-radius: 50%;
   padding: 5px;
   transition: all 0.3s;
+}
+
+.tag-selected i {
+  border-radius: 50%;
+  width: 17px;
+  height: 17px;
+  color: white;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.tag-selected-copy {
+  background-color: #ffd15b;
+  margin-top: 5px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 17px 18px 17px 18px;
+}
+
+.tag-selected-copy i {
+  cursor: pointer;
+}
+
+.tag-style {
+  padding: 10px;
+}
+.selected-list {
+  margin-bottom: 15px;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.tags-and-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+}
+
+.total-tags {
+  display: flex;
+  gap: 20px;
+}
+
+#total-recettes {
+  margin-left: 20px;
+}
+
+/* Style pour les tags sélectionnés */
+.tag-selected {
+  background-color: #ffd15b;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }

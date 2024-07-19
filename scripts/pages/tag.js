@@ -87,6 +87,7 @@ function displaySetTag(listTagDom, tagSet, tagSelectedList, tagSelected) {
       icon.addEventListener("click", function () {
         divSelected.remove();
         divSelectedCopy.remove();
+        div.style.display = ""; // Rendre l'élément d'origine à nouveau visible
       });
 
       tagSelectedList.appendChild(divSelected);
@@ -103,11 +104,12 @@ function displaySetTag(listTagDom, tagSet, tagSelectedList, tagSelected) {
       iconTag.addEventListener("click", function () {
         divSelected.remove();
         divSelectedCopy.remove();
+        div.style.display = ""; // Rendre l'élément d'origine à nouveau visible
       });
 
       tagSelected.appendChild(divSelectedCopy);
 
-      this.remove();
+      this.style.display = "none";
     });
 
     listTagDom.appendChild(div);

@@ -1,6 +1,7 @@
 const searchInput = document.querySelector(".search-input");
 const removeIcon = document.querySelector(".removeIcon");
 const searchIcon = document.querySelector(".searchIcon");
+const selectedList = document.querySelectorAll(".tag-style");
 
 searchInput.addEventListener("input", function (e) {
   e.preventDefault();
@@ -22,6 +23,43 @@ removeIcon.addEventListener("click", function () {
   displayData(recipes);
 });
 
+selectedList.forEach((tagSelected) => {
+  tagSelected.addEventListener("click", function (e) {
+    if (this.textContent.trim() !== "") {
+      const tagContent = this.textContent.trim();
+      console.log(tagContent);
+      const tagType = this.getAttribute("data-tag-type");
+      console.log(tagType);
+
+      // Ajouter ou retirer le tag de la liste appropriée
+      switch (tagType) {
+        case "ingredient":
+          updateSelectedList(selectedIngredients, tagContent);
+          break;
+        case "ustensil":
+          updateSelectedList(selectedUstensils, tagContent);
+          break;
+        case "appliance":
+          updateSelectedList(selectedAppliances, tagContent);
+          break;
+        default:
+          console.error(`Type de tag non reconnu : ${tagType}`);
+          return;
+      }
+
+      // Appeler advancedSearch avec les listes mises à jour
+      filtredRecipes = advancedSearch(
+        selectedIngredients,
+        selectedUstensils,
+        selectedAppliances,
+        recipes
+      );
+      // Mettre à jour l'affichage
+      displayData(filtredRecipes);
+    }
+  });
+});
+
 function simpleSearch(inputValue, listRecipes) {
   const lowerCaseInput = inputValue.toLowerCase();
 
@@ -40,35 +78,72 @@ function simpleSearch(inputValue, listRecipes) {
 }
 
 function advancedSearch(
-  inputIngredients,
-  inputUstensiles,
-  inputAppareil,
+  listSelectedIngredients,
+  listSelectedUstensiles,
+  listSelectedAppareil,
   listRecipes
 ) {
-  // Filtrer les recettes en fonction des critères de recherche avancée
-  const result = listRecipes.filter((recipe) => {
-    // Vérifier si les ingrédients correspondent
-    const ingredientsCheck = inputIngredients.every((ingredient) =>
-      recipe.ingredients.some((recipeIngredient) =>
-        recipeIngredient.toLowerCase().includes(ingredient.toLowerCase())
-      )
-    );
-
-    // Vérifier si les ustensiles correspondent
-    const ustensilesCheck = inputUstensiles.every((ustensile) =>
-      recipe.ustensiles.some((recipeUstensile) =>
-        recipeUstensile.toLowerCase().includes(ustensile.toLowerCase())
-      )
-    );
-
-    // Vérifier si l'appareil correspond
-    const appareilCheck = recipe.appareil
-      .toLowerCase()
-      .includes(inputAppareil.toLowerCase());
-
-    // Retourner true si tous les critères de recherche avancée correspondent
-    return ingredientsCheck && ustensilesCheck && appareilCheck;
+  let listTemporaire = listRecipes;
+  listSelectedIngredients.forEach((ingredient) => {
+    // verifie si cet ingredient existe dans la list des recipe
+    listTemporaire = searchByIngredients(ingredient, listTemporaire);
   });
 
+  // checher les ustinsiles
+  listSelectedUstensiles.forEach((ustinsile) => {
+    // verifie si cet ustinsile existe dans la list des recipe
+    listTemporaire = searchByUstinsiles(ustinsile, listTemporaire);
+  });
+  //chercher les appliances
+  listSelectedAppareil.forEach((appliance) => {
+    listTemporaire = searchByAppliances(appliance, listTemporaire);
+  });
+
+  return listTemporaire;
+}
+
+function searchByIngredients(stringStr, listRecipes) {
+  const lowerCaseInput = stringStr.toLowerCase();
+  // Filtrer les recettes qui correspondent à la requête
+  const result = listRecipes.filter((recipe) =>
+    recipe.ingredients.some((ingredient) =>
+      ingredient.ingredient.toLowerCase().includes(lowerCaseInput)
+    )
+  );
+
   return result;
+}
+
+function searchByAppliances(stringStr, listRecipes) {
+  const lowerCaseInput = stringStr.toLowerCase();
+  // Filtrer les recettes qui correspondent à la requête
+  const result = listRecipes.filter((recipe) =>
+    recipe.appliance.toLowerCase().includes(lowerCaseInput)
+  );
+
+  return result;
+}
+
+function searchByUstinsiles(stringStr, listRecipes) {
+  const lowerCaseInput = stringStr.toLowerCase();
+  // Filtrer les recettes qui correspondent à la requête
+  const result = listRecipes.filter((recipe) =>
+    recipe.ustensils.some((ustinsil) =>
+      ustinsil.toLowerCase().includes(lowerCaseInput)
+    )
+  );
+
+  return result;
+}
+
+function updateSelectedList(list, item) {
+  const index = list.indexOf(item);
+  console.log(index);
+  if (index === -1) {
+    list.push(item);
+    console.log(list);
+  } else {
+    list.splice(index, 1);
+    console.log(list);
+  }
 }

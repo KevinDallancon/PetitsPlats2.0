@@ -3,6 +3,10 @@ const ingredientsSet = new Set();
 const ustensilesSet = new Set();
 const appliancesSet = new Set();
 
+let selectedIngredients = [];
+let selectedUstensils = [];
+let selectedAppliances = [];
+
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -31,53 +35,68 @@ function displaySetTags() {
   const ingredientsSelectedList = document.getElementById(
     "ingredientsSelectedList"
   );
-  const ingredientsSelected = document.getElementById("ingredientsSelected");
+  const ingredientsSelected = document.getElementById("tagSelected");
   displaySetTag(
     ingredientList,
     ingredientsSet,
     ingredientsSelectedList,
-    ingredientsSelected
+    ingredientsSelected,
+    "ingredient"
   );
 
   const appareilsList = document.getElementById("appareilsList");
   const appareilsSelectedList = document.getElementById(
     "appareilsSelectedList"
   );
-  const appareilsSelected = document.getElementById("appareilsSelected");
+  const appareilsSelected = document.getElementById("tagSelected");
   displaySetTag(
     appareilsList,
     appliancesSet,
     appareilsSelectedList,
-    appareilsSelected
+    appareilsSelected,
+    "appliance"
   );
 
   const ustensilesList = document.getElementById("ustensilesList");
   const ustensilesSelectedList = document.getElementById(
     "ustensilesSelectedList"
   );
-  const ustensilesSelected = document.getElementById("ustensilesSelected");
+  const ustensilesSelected = document.getElementById("tagSelected");
   displaySetTag(
     ustensilesList,
     ustensilesSet,
     ustensilesSelectedList,
-    ustensilesSelected
+    ustensilesSelected,
+    "ustensil"
   );
 }
 
-function displaySetTag(listTagDom, tagSet, tagSelectedList, tagSelected) {
+function displaySetTag(
+  listTagDom,
+  tagSet,
+  tagSelectedList,
+  tagSelected,
+  tagType
+) {
   listTagDom.innerHTML = ""; // Vider le contenu précédent
 
-  tagSet.forEach((ingredient) => {
+  tagSet.forEach((tag) => {
     const div = document.createElement("div");
     div.classList.add("tag-style");
-    div.textContent = capitalizeFirstLetter(ingredient);
+    div.textContent = capitalizeFirstLetter(tag);
+    div.setAttribute("data-tag-type", tagType); // Ajout de l'attribut data-tag-type
 
-    // rendre la div cliquable et ajuter l'element dans tagSelectedList
+    // rendre la div cliquable et ajouter l'element dans tagSelectedList
     div.addEventListener("click", function (e) {
       e.preventDefault();
+      // cacher l'element selectionné de la liste
+      this.style.display = "none";
+
+      // ajouter le tag en jaune au top
       const divSelected = document.createElement("div");
       divSelected.classList.add("tag-selected");
       divSelected.textContent = this.textContent;
+      divSelected.setAttribute("data-tag-type", tagType); // Ajout de l'attribut data-tag-type
 
       // Créez une icône de croix
       const icon = document.createElement("i");
@@ -85,50 +104,37 @@ function displaySetTag(listTagDom, tagSet, tagSelectedList, tagSelected) {
       divSelected.appendChild(icon);
 
       icon.addEventListener("click", function () {
-        divSelected.remove();
-        divSelectedCopy.remove();
-        div.style.display = ""; // Rendre l'élément d'origine à nouveau visible
+        deleteTag(divSelectedG, divSelected, div);
       });
 
       tagSelectedList.appendChild(divSelected);
 
-      const divSelectedCopy = document.createElement("div");
-      divSelectedCopy.classList.add("tag-selected-copy");
-      divSelectedCopy.textContent = this.textContent;
+      const divSelectedG = document.createElement("div");
+      divSelectedG.classList.add("tag-selectedGeneral");
+      divSelectedG.textContent = this.textContent;
+      divSelectedG.setAttribute("data-tag-type", tagType); // Ajout de l'attribut data-tag-type
 
       // Créez une icône de croix
       const iconTag = document.createElement("i");
       iconTag.className = "fa fa-times";
-      divSelectedCopy.appendChild(iconTag);
+      divSelectedG.appendChild(iconTag);
 
       iconTag.addEventListener("click", function () {
-        divSelected.remove();
-        divSelectedCopy.remove();
-        div.style.display = ""; // Rendre l'élément d'origine à nouveau visible
+        deleteTag(divSelectedG, divSelected, div);
       });
 
-      tagSelected.appendChild(divSelectedCopy);
-
-      this.style.display = "none";
+      tagSelected.appendChild(divSelectedG);
     });
 
     listTagDom.appendChild(div);
   });
 }
 
-// function totalIngredient(recipes) {
-//   // Créez une icône de croix
-//   const icon = document.createElement("i");
-//   icon.className = "fa fa-times";
-//   icon.style.marginLeft = "10px";
-
-//   icon.addEventListener("click", function (event) {
-//     event.preventDefault();
-//     filterSection.removeChild(a);
-//   });
-
-//   a.appendChild(icon);
-// }
+function deleteTag(divSelectedG, divSelected, div) {
+  divSelected.remove();
+  divSelectedG.remove();
+  div.style.display = "block"; // Rendre l'élément d'origine à nouveau visible
+}
 
 function toggleDropdown(dropdownId) {
   const dropdown = document.getElementById(dropdownId);

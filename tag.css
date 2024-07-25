@@ -98,7 +98,9 @@
   cursor: pointer;
 }
 
-.tag-selected-copy {
+.tag-selectedGeneral {
+  width: 30%;
+  max-width: 200px;
   background-color: #ffd15b;
   margin-top: 5px;
   border-radius: 10px;
@@ -108,7 +110,7 @@
   padding: 17px 18px 17px 18px;
 }
 
-.tag-selected-copy i {
+.tag-selectedGeneral i {
   cursor: pointer;
 }
 
@@ -135,7 +137,10 @@
 }
 
 .total-tags {
+  width: 65%;
   display: flex;
+  justify-content: space-between;
+  flex-direction: column;
   gap: 20px;
 }
 
@@ -151,4 +156,23 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.tags {
+  display: flex;
+  justify-content: space-between;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#tagSelected {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  height: auto;
 }

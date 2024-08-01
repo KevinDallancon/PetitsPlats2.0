@@ -104,7 +104,7 @@ function displaySetTag(
       divSelected.appendChild(icon);
 
       icon.addEventListener("click", function () {
-        deleteTag(divSelectedG, divSelected, div);
+        deleteTag(divSelectedG, divSelected, div, tagType);
       });
 
       tagSelectedList.appendChild(divSelected);
@@ -120,22 +120,73 @@ function displaySetTag(
       divSelectedG.appendChild(iconTag);
 
       iconTag.addEventListener("click", function () {
-        deleteTag(divSelectedG, divSelected, div);
+        deleteTag(divSelectedG, divSelected, div, tagType);
       });
 
       tagSelected.appendChild(divSelectedG);
+
+      ///
+      if (this.textContent.trim() !== "") {
+        const tagContent = this.textContent.trim();
+        const tagType = this.getAttribute("data-tag-type");
+        
+        // Ajouter ou retirer le tag de la liste appropriée
+        switch (tagType) {
+          case "ingredient":
+            updateSelectedList(selectedIngredients, tagContent);
+            break;
+          case "ustensil":
+            updateSelectedList(selectedUstensils, tagContent);
+            break;
+          case "appliance":
+            updateSelectedList(selectedAppliances, tagContent);
+            break;
+          default:
+            console.error(`Type de tag non reconnu : ${tagType}`);
+            return;
+        }
+  
+        searchRecipes();
+     
+      }
+
+      ///
     });
 
     listTagDom.appendChild(div);
   });
 }
 
-function deleteTag(divSelectedG, divSelected, div) {
+function deleteTag(divSelectedG, divSelected, div, tagType) {
+  const tagContent = divSelectedG.textContent.trim();
+  switch(tagType){
+    case "ingredient":
+      updateSelectedList(selectedIngredients, tagContent);
+      break;
+    case "ustensil":
+      updateSelectedList(selectedUstensils, tagContent);
+      break;
+    case "appliance":
+      updateSelectedList(selectedAppliances, tagContent);
+      break;
+    default:
+      console.error(`Type de tag non reconnu : ${tagType}`);
+      return;
+  }
   divSelected.remove();
   divSelectedG.remove();
   div.style.display = "block"; // Rendre l'élément d'origine à nouveau visible
+  searchRecipes();
 }
 
+function searchRecipes(){
+  
+  filtredRecipes = recipes;
+  if(document.querySelector(".search-input").value.length > 2)
+    filtredRecipes = simpleSearch(document.querySelector(".search-input").value, filtredRecipes);
+  filtredRecipes = advancedSearch(selectedIngredients, selectedUstensils,selectedAppliances,filtredRecipes);
+  displayData(filtredRecipes);
+}
 function toggleDropdown(dropdownId) {
   const dropdown = document.getElementById(dropdownId);
   const button = dropdown.previousElementSibling;

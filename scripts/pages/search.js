@@ -12,7 +12,7 @@ searchInput.addEventListener("input", function (e) {
   if (this.value.length > 2) {
     filtredRecipes = simpleSearch(this.value, filtredRecipes);
   }
-
+  filtredRecipes = advancedSearch(selectedIngredients, selectedUstensils,selectedAppliances,filtredRecipes);
   // Mettre à jour l'affichage avec les recettes filtrées
   displayData(filtredRecipes);
 });
@@ -20,45 +20,16 @@ searchInput.addEventListener("input", function (e) {
 // Event listener pour l'icône de suppression
 removeIcon.addEventListener("click", function () {
   searchInput.value = "";
-  displayData(recipes);
+  filtredRecipes = recipes; 
+  filtredRecipes = advancedSearch(
+    selectedIngredients,
+    selectedUstensils,
+    selectedAppliances,
+    filtredRecipes
+  );
+  displayData(filtredRecipes);
 });
 
-selectedList.forEach((tagSelected) => {
-  tagSelected.addEventListener("click", function (e) {
-    if (this.textContent.trim() !== "") {
-      const tagContent = this.textContent.trim();
-      console.log(tagContent);
-      const tagType = this.getAttribute("data-tag-type");
-      console.log(tagType);
-
-      // Ajouter ou retirer le tag de la liste appropriée
-      switch (tagType) {
-        case "ingredient":
-          updateSelectedList(selectedIngredients, tagContent);
-          break;
-        case "ustensil":
-          updateSelectedList(selectedUstensils, tagContent);
-          break;
-        case "appliance":
-          updateSelectedList(selectedAppliances, tagContent);
-          break;
-        default:
-          console.error(`Type de tag non reconnu : ${tagType}`);
-          return;
-      }
-
-      // Appeler advancedSearch avec les listes mises à jour
-      filtredRecipes = advancedSearch(
-        selectedIngredients,
-        selectedUstensils,
-        selectedAppliances,
-        recipes
-      );
-      // Mettre à jour l'affichage
-      displayData(filtredRecipes);
-    }
-  });
-});
 
 function simpleSearch(inputValue, listRecipes) {
   const lowerCaseInput = inputValue.toLowerCase();
@@ -138,12 +109,9 @@ function searchByUstinsiles(stringStr, listRecipes) {
 
 function updateSelectedList(list, item) {
   const index = list.indexOf(item);
-  console.log(index);
   if (index === -1) {
     list.push(item);
-    console.log(list);
   } else {
     list.splice(index, 1);
-    console.log(list);
   }
 }

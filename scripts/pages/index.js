@@ -15,6 +15,9 @@ function displayData(recettes) {
 function updateTotal(total) {
   const totalElement = document.getElementById("total-recettes");
   totalElement.textContent = total + " recettes";
+
+  if (totalElement.textContent === 1) {
+  }
 }
 
 function init() {

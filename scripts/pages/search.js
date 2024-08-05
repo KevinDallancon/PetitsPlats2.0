@@ -12,7 +12,12 @@ searchInput.addEventListener("input", function (e) {
   if (this.value.length > 2) {
     filtredRecipes = simpleSearch(this.value, filtredRecipes);
   }
-  filtredRecipes = advancedSearch(selectedIngredients, selectedUstensils,selectedAppliances,filtredRecipes);
+  filtredRecipes = advancedSearch(
+    selectedIngredients,
+    selectedUstensils,
+    selectedAppliances,
+    filtredRecipes
+  );
   // Mettre à jour l'affichage avec les recettes filtrées
   displayData(filtredRecipes);
 });
@@ -20,7 +25,7 @@ searchInput.addEventListener("input", function (e) {
 // Event listener pour l'icône de suppression
 removeIcon.addEventListener("click", function () {
   searchInput.value = "";
-  filtredRecipes = recipes; 
+  filtredRecipes = recipes;
   filtredRecipes = advancedSearch(
     selectedIngredients,
     selectedUstensils,
@@ -29,7 +34,6 @@ removeIcon.addEventListener("click", function () {
   );
   displayData(filtredRecipes);
 });
-
 
 function simpleSearch(inputValue, listRecipes) {
   const lowerCaseInput = inputValue.toLowerCase();
@@ -55,20 +59,23 @@ function advancedSearch(
   listRecipes
 ) {
   let listTemporaire = listRecipes;
-  listSelectedIngredients.forEach((ingredient) => {
-    // verifie si cet ingredient existe dans la list des recipe
-    listTemporaire = searchByIngredients(ingredient, listTemporaire);
-  });
 
-  // checher les ustinsiles
-  listSelectedUstensiles.forEach((ustinsile) => {
-    // verifie si cet ustinsile existe dans la list des recipe
-    listTemporaire = searchByUstinsiles(ustinsile, listTemporaire);
-  });
-  //chercher les appliances
-  listSelectedAppareil.forEach((appliance) => {
-    listTemporaire = searchByAppliances(appliance, listTemporaire);
-  });
+  for (let i = 0; i < listSelectedIngredients.length; i++) {
+    const ingredient = listSelectedIngredients[i];
+    // Vérifie si cet ingrédient existe dans la liste des recettes
+    listTemporaire = searchByIngredients(ingredient, listTemporaire);
+  }
+  for (let i = 0; i < listSelectedUstensiles.length; i++) {
+    const ustensile = listSelectedUstensiles[i];
+    // Vérifie si cet ustensile existe dans la liste des recettes
+    listTemporaire = searchByUstensiles(ustensile, listTemporaire);
+  }
+
+  for (let i = 0; i < listSelectedAppareil.length; i++) {
+    const appareil = listSelectedAppareil[i];
+    // Vérifie si cet appareil existe dans la liste des recettes
+    listTemporaire = searchByAppareil(appareil, listTemporaire);
+  }
 
   return listTemporaire;
 }

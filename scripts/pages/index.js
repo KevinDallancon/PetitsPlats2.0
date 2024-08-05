@@ -4,11 +4,12 @@ function displayData(recettes) {
   const recetteSection = document.querySelector(".recettes_section");
   recetteSection.innerHTML = "";
 
-  recettes.forEach((recette) => {
+  for (let i = 0; i < recettes.length; i++) {
+    const recette = recettes[i];
     const recetteModel = recipeTemplate(recette);
     const userCardDOM = recetteModel.getCardDOM();
     recetteSection.appendChild(userCardDOM);
-  });
+  }
   updateTotal(recettes.length);
 }
 

@@ -68,13 +68,13 @@ function advancedSearch(
   for (let i = 0; i < listSelectedUstensiles.length; i++) {
     const ustensile = listSelectedUstensiles[i];
     // Vérifie si cet ustensile existe dans la liste des recettes
-    listTemporaire = searchByUstensiles(ustensile, listTemporaire);
+    listTemporaire = searchByUstinsiles(ustensile, listTemporaire);
   }
 
   for (let i = 0; i < listSelectedAppareil.length; i++) {
     const appareil = listSelectedAppareil[i];
     // Vérifie si cet appareil existe dans la liste des recettes
-    listTemporaire = searchByAppareil(appareil, listTemporaire);
+    listTemporaire = searchByAppliances(appareil, listTemporaire);
   }
 
   return listTemporaire;

@@ -12,22 +12,21 @@ function capitalizeFirstLetter(string) {
 }
 
 function createSetTags(listRecipes) {
-  // Parcourir chaque recette pour extraire les ingrédients
-  listRecipes.forEach((recipe) => {
-    // remplir le set des ingredients
-    recipe.ingredients.forEach((ingredient) => {
+  for (let i = 0; i < listRecipes.length; i++) {
+    const recipe = listRecipes[i];
+    for (let i = 0; i < recipe.ingredients.length; i++) {
+      const ingredient = recipe.ingredients[i];
       const ingredientName = ingredient.ingredient.trim().toLowerCase();
       ingredientsSet.add(ingredientName);
-    });
-    // remplir le set des ustensils
-    recipe.ustensils.forEach((ustensile) => {
+    }
+    for (let i = 0; i < recipe.ustensils.length; i++) {
+      const ustensile = recipe.ustensils[i];
       const ustensileName = ustensile.trim().toLowerCase();
       ustensilesSet.add(ustensileName);
-    });
-
+    }
     const appareilName = recipe.appliance.trim().toLowerCase();
     appliancesSet.add(appareilName);
-  });
+  }
 }
 
 function displaySetTags() {
@@ -80,7 +79,7 @@ function displaySetTag(
 ) {
   listTagDom.innerHTML = ""; // Vider le contenu précédent
 
-  tagSet.forEach((tag) => {
+  for (const tag of tagSet) {
     const div = document.createElement("div");
     div.classList.add("tag-style");
     div.textContent = capitalizeFirstLetter(tag);
@@ -129,7 +128,7 @@ function displaySetTag(
       if (this.textContent.trim() !== "") {
         const tagContent = this.textContent.trim();
         const tagType = this.getAttribute("data-tag-type");
-        
+
         // Ajouter ou retirer le tag de la liste appropriée
         switch (tagType) {
           case "ingredient":
@@ -145,21 +144,20 @@ function displaySetTag(
             console.error(`Type de tag non reconnu : ${tagType}`);
             return;
         }
-  
+
         searchRecipes();
-     
       }
 
       ///
     });
 
     listTagDom.appendChild(div);
-  });
+  }
 }
 
 function deleteTag(divSelectedG, divSelected, div, tagType) {
   const tagContent = divSelectedG.textContent.trim();
-  switch(tagType){
+  switch (tagType) {
     case "ingredient":
       updateSelectedList(selectedIngredients, tagContent);
       break;
@@ -179,14 +177,22 @@ function deleteTag(divSelectedG, divSelected, div, tagType) {
   searchRecipes();
 }
 
-function searchRecipes(){
-  
+function searchRecipes() {
   filtredRecipes = recipes;
-  if(document.querySelector(".search-input").value.length > 2)
-    filtredRecipes = simpleSearch(document.querySelector(".search-input").value, filtredRecipes);
-  filtredRecipes = advancedSearch(selectedIngredients, selectedUstensils,selectedAppliances,filtredRecipes);
+  if (document.querySelector(".search-input").value.length > 2)
+    filtredRecipes = simpleSearch(
+      document.querySelector(".search-input").value,
+      filtredRecipes
+    );
+  filtredRecipes = advancedSearch(
+    selectedIngredients,
+    selectedUstensils,
+    selectedAppliances,
+    filtredRecipes
+  );
   displayData(filtredRecipes);
 }
+
 function toggleDropdown(dropdownId) {
   const dropdown = document.getElementById(dropdownId);
   const button = dropdown.previousElementSibling;

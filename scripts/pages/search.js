@@ -2,7 +2,6 @@ const searchInput = document.querySelector(".search-input");
 const removeIcon = document.querySelector(".removeIcon");
 const searchIcon = document.querySelector(".searchIcon");
 const selectedList = document.querySelectorAll(".tag-style");
-const inputs = document.querySelectorAll(".total-tags input");
 
 searchInput.addEventListener("input", function (e) {
   e.preventDefault();

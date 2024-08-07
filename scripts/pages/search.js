@@ -2,6 +2,7 @@ const searchInput = document.querySelector(".search-input");
 const removeIcon = document.querySelector(".removeIcon");
 const searchIcon = document.querySelector(".searchIcon");
 const selectedList = document.querySelectorAll(".tag-style");
+const inputs = document.querySelectorAll(".total-tags input");
 
 searchInput.addEventListener("input", function (e) {
   e.preventDefault();
@@ -12,7 +13,12 @@ searchInput.addEventListener("input", function (e) {
   if (this.value.length > 2) {
     filtredRecipes = simpleSearch(this.value, filtredRecipes);
   }
-  filtredRecipes = advancedSearch(selectedIngredients, selectedUstensils,selectedAppliances,filtredRecipes);
+  filtredRecipes = advancedSearch(
+    selectedIngredients,
+    selectedUstensils,
+    selectedAppliances,
+    filtredRecipes
+  );
   // Mettre à jour l'affichage avec les recettes filtrées
   displayData(filtredRecipes);
 });
@@ -20,7 +26,7 @@ searchInput.addEventListener("input", function (e) {
 // Event listener pour l'icône de suppression
 removeIcon.addEventListener("click", function () {
   searchInput.value = "";
-  filtredRecipes = recipes; 
+  filtredRecipes = recipes;
   filtredRecipes = advancedSearch(
     selectedIngredients,
     selectedUstensils,
@@ -29,7 +35,6 @@ removeIcon.addEventListener("click", function () {
   );
   displayData(filtredRecipes);
 });
-
 
 function simpleSearch(inputValue, listRecipes) {
   const lowerCaseInput = inputValue.toLowerCase();

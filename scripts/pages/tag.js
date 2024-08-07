@@ -3,14 +3,17 @@ const ingredientsSet = new Set();
 const ustensilesSet = new Set();
 const appliancesSet = new Set();
 
+// Listes pour stocker les tags sélectionnés
 let selectedIngredients = [];
 let selectedUstensils = [];
 let selectedAppliances = [];
 
+// Fonction utilitaire pour capitaliser la première lettre
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+// Fonction pour créer les ensembles de tags à partir des recettes
 function createSetTags(listRecipes) {
   // Parcourir chaque recette pour extraire les ingrédients
   listRecipes.forEach((recipe) => {
@@ -30,7 +33,9 @@ function createSetTags(listRecipes) {
   });
 }
 
+// Fonction pour afficher tous les tags dans leurs listes respectives
 function displaySetTags() {
+  // Afficher les tags d'ingrédients
   const ingredientList = document.getElementById("ingredientList");
   const ingredientsSelectedList = document.getElementById(
     "ingredientsSelectedList"
@@ -44,6 +49,7 @@ function displaySetTags() {
     "ingredient"
   );
 
+  // Afficher les tags d'appareils
   const appareilsList = document.getElementById("appareilsList");
   const appareilsSelectedList = document.getElementById(
     "appareilsSelectedList"
@@ -57,6 +63,7 @@ function displaySetTags() {
     "appliance"
   );
 
+  // Afficher les tags d'ustensiles
   const ustensilesList = document.getElementById("ustensilesList");
   const ustensilesSelectedList = document.getElementById(
     "ustensilesSelectedList"
@@ -71,6 +78,7 @@ function displaySetTags() {
   );
 }
 
+// Fonction principale pour afficher et gérer les tags
 function displaySetTag(
   listTagDom,
   tagSet,
@@ -129,7 +137,7 @@ function displaySetTag(
       if (this.textContent.trim() !== "") {
         const tagContent = this.textContent.trim();
         const tagType = this.getAttribute("data-tag-type");
-        
+
         // Ajouter ou retirer le tag de la liste appropriée
         switch (tagType) {
           case "ingredient":
@@ -145,9 +153,8 @@ function displaySetTag(
             console.error(`Type de tag non reconnu : ${tagType}`);
             return;
         }
-  
+
         searchRecipes();
-     
       }
 
       ///
@@ -157,9 +164,10 @@ function displaySetTag(
   });
 }
 
+// Fonction pour supprimer un tag sélectionné
 function deleteTag(divSelectedG, divSelected, div, tagType) {
   const tagContent = divSelectedG.textContent.trim();
-  switch(tagType){
+  switch (tagType) {
     case "ingredient":
       updateSelectedList(selectedIngredients, tagContent);
       break;
@@ -179,14 +187,24 @@ function deleteTag(divSelectedG, divSelected, div, tagType) {
   searchRecipes();
 }
 
-function searchRecipes(){
-  
+// Fonction principale de recherche et filtrage des recettes
+function searchRecipes() {
   filtredRecipes = recipes;
-  if(document.querySelector(".search-input").value.length > 2)
-    filtredRecipes = simpleSearch(document.querySelector(".search-input").value, filtredRecipes);
-  filtredRecipes = advancedSearch(selectedIngredients, selectedUstensils,selectedAppliances,filtredRecipes);
+  if (document.querySelector(".search-input").value.length > 2)
+    filtredRecipes = simpleSearch(
+      document.querySelector(".search-input").value,
+      filtredRecipes
+    );
+  filtredRecipes = advancedSearch(
+    selectedIngredients,
+    selectedUstensils,
+    selectedAppliances,
+    filtredRecipes
+  );
   displayData(filtredRecipes);
 }
+
+// Fonction pour gérer l'ouverture/fermeture des dropdowns
 function toggleDropdown(dropdownId) {
   const dropdown = document.getElementById(dropdownId);
   const button = dropdown.previousElementSibling;

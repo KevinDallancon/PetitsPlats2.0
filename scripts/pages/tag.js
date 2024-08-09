@@ -76,6 +76,46 @@ function displaySetTags() {
     ustensilesSelected,
     "ustensil"
   );
+
+  // Ecouteur d'evenement pour filtrer les inputs
+  document
+    .getElementById("ingredientInput")
+    .addEventListener("input", function () {
+      const filteredIngredients = filterTags(this.value, ingredientsSet);
+      displaySetTag(
+        ingredientList,
+        filteredIngredients,
+        ingredientsSelectedList,
+        ingredientsSelected,
+        "ingredient"
+      );
+    });
+
+  document
+    .getElementById("appareilInput")
+    .addEventListener("input", function () {
+      const filteredAppliances = filterTags(this.value, appliancesSet);
+      displaySetTag(
+        appareilsList,
+        filteredAppliances,
+        appareilsSelectedList,
+        appareilsSelected,
+        "appliance"
+      );
+    });
+
+  document
+    .getElementById("ustensileInput")
+    .addEventListener("input", function () {
+      const filteredUstensils = filterTags(this.value, ustensilesSet);
+      displaySetTag(
+        ustensilesList,
+        filteredUstensils,
+        ustensilesSelectedList,
+        ustensilesSelected,
+        "ustensil"
+      );
+    });
 }
 
 // Fonction principale pour afficher et gérer les tags

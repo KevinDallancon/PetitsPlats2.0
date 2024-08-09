@@ -3,10 +3,12 @@ const ingredientsSet = new Set();
 const ustensilesSet = new Set();
 const appliancesSet = new Set();
 
+// Tableaux pour stocker les éléments sélectionnés par l'utilisateur
 let selectedIngredients = [];
 let selectedUstensils = [];
 let selectedAppliances = [];
 
+// Function pour mettre en majascule la premiere lettre
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -28,7 +30,7 @@ function createSetTags(listRecipes) {
     appliancesSet.add(appareilName);
   }
 }
-
+// Fonction pour afficher tous les ensembles de tags
 function displaySetTags() {
   const ingredientList = document.getElementById("ingredientList");
   const ingredientsSelectedList = document.getElementById(
@@ -68,6 +70,46 @@ function displaySetTags() {
     ustensilesSelected,
     "ustensil"
   );
+
+  // Ecouteur d'evenement pour filtrer les inputs
+  document
+    .getElementById("ingredientInput")
+    .addEventListener("input", function () {
+      const filteredIngredients = filterTags(this.value, ingredientsSet);
+      displaySetTag(
+        ingredientList,
+        filteredIngredients,
+        ingredientsSelectedList,
+        ingredientsSelected,
+        "ingredient"
+      );
+    });
+
+  document
+    .getElementById("appareilInput")
+    .addEventListener("input", function () {
+      const filteredAppliances = filterTags(this.value, appliancesSet);
+      displaySetTag(
+        appareilsList,
+        filteredAppliances,
+        appareilsSelectedList,
+        appareilsSelected,
+        "appliance"
+      );
+    });
+
+  document
+    .getElementById("ustensileInput")
+    .addEventListener("input", function () {
+      const filteredUstensils = filterTags(this.value, ustensilesSet);
+      displaySetTag(
+        ustensilesList,
+        filteredUstensils,
+        ustensilesSelectedList,
+        ustensilesSelected,
+        "ustensil"
+      );
+    });
 }
 
 function displaySetTag(
@@ -155,6 +197,7 @@ function displaySetTag(
   }
 }
 
+// Fonction pour supprimer un tag sélectionné
 function deleteTag(divSelectedG, divSelected, div, tagType) {
   const tagContent = divSelectedG.textContent.trim();
   switch (tagType) {
@@ -177,6 +220,7 @@ function deleteTag(divSelectedG, divSelected, div, tagType) {
   searchRecipes();
 }
 
+// Fonction pour rechercher des recettes basées sur les filtres actuels
 function searchRecipes() {
   filtredRecipes = recipes;
   if (document.querySelector(".search-input").value.length > 2)
@@ -193,6 +237,7 @@ function searchRecipes() {
   displayData(filtredRecipes);
 }
 
+// Fonction pour basculer l'affichage d'un dropdown
 function toggleDropdown(dropdownId) {
   const dropdown = document.getElementById(dropdownId);
   const button = dropdown.previousElementSibling;
@@ -209,4 +254,12 @@ function toggleDropdown(dropdownId) {
     icon.classList.add("fa-chevron-down");
     button.classList.remove("button-radius");
   }
+}
+
+// Fonction pour filtrer les tags
+function filterTags(inputValue, tagSet) {
+  const lowerCaseInput = inputValue.toLowerCase();
+  return Array.from(tagSet).filter((tag) =>
+    tag.toLowerCase().includes(lowerCaseInput)
+  );
 }

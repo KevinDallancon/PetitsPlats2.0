@@ -262,3 +262,11 @@ function toggleDropdown(dropdownId) {
     button.classList.remove("button-radius");
   }
 }
+
+// Fonction pour filtrer les tags
+function filterTags(inputValue, tagSet) {
+  const lowerCaseInput = inputValue.toLowerCase();
+  return Array.from(tagSet).filter((tag) =>
+    tag.toLowerCase().includes(lowerCaseInput)
+  );
+}

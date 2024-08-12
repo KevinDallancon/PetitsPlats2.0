@@ -37,17 +37,35 @@ removeIcon.addEventListener("click", function () {
 
 function simpleSearch(inputValue, listRecipes) {
   const lowerCaseInput = inputValue.toLowerCase();
+  const result = [];
 
-  // Filtrer les recettes qui correspondent à la requête
-  const result = listRecipes.filter(
-    (recipe) =>
-      // Vérifier si le nom de la recette correspond
+  for (let i = 0; i < listRecipes.length; i++) {
+    const recipe = listRecipes[i];
+
+    // Vérifier si le nom ou la description de la recette correspond
+    if (
       recipe.name.toLowerCase().includes(lowerCaseInput) ||
-      recipe.description.toLowerCase().includes(lowerCaseInput) ||
-      recipe.ingredients.some((ingredient) =>
-        ingredient.ingredient.toLowerCase().includes(lowerCaseInput)
-      )
-  );
+      recipe.description.toLowerCase().includes(lowerCaseInput)
+    ) {
+      result.push(recipe);
+      continue; // Passer à la recette suivante
+    }
+
+    // Vérifier les ingrédients
+    let ingredientFound = false;
+    for (let j = 0; j < recipe.ingredients.length; j++) {
+      if (
+        recipe.ingredients[j].ingredient.toLowerCase().includes(lowerCaseInput)
+      ) {
+        ingredientFound = true;
+        break; // Sortir de la boucle des ingrédients
+      }
+    }
+
+    if (ingredientFound) {
+      result.push(recipe);
+    }
+  }
 
   return result;
 }
@@ -82,34 +100,63 @@ function advancedSearch(
 
 function searchByIngredients(stringStr, listRecipes) {
   const lowerCaseInput = stringStr.toLowerCase();
-  // Filtrer les recettes qui correspondent à la requête
-  const result = listRecipes.filter((recipe) =>
-    recipe.ingredients.some((ingredient) =>
-      ingredient.ingredient.toLowerCase().includes(lowerCaseInput)
-    )
-  );
+  const result = [];
+
+  for (let i = 0; i < listRecipes.length; i++) {
+    const recipe = listRecipes[i];
+    let ingredientFound = false;
+
+    for (let j = 0; j < recipe.ingredients.length; j++) {
+      if (
+        recipe.ingredients[j].ingredient.toLowerCase().includes(lowerCaseInput)
+      ) {
+        ingredientFound = true;
+        break;
+      }
+    }
+
+    if (ingredientFound) {
+      result.push(recipe);
+    }
+  }
 
   return result;
 }
 
 function searchByAppliances(stringStr, listRecipes) {
   const lowerCaseInput = stringStr.toLowerCase();
-  // Filtrer les recettes qui correspondent à la requête
-  const result = listRecipes.filter((recipe) =>
-    recipe.appliance.toLowerCase().includes(lowerCaseInput)
-  );
+  const result = [];
+
+  for (let i = 0; i < listRecipes.length; i++) {
+    const recipe = listRecipes[i];
+
+    if (recipe.appliance.toLowerCase().includes(lowerCaseInput)) {
+      result.push(recipe);
+    }
+  }
 
   return result;
 }
 
 function searchByUstinsiles(stringStr, listRecipes) {
   const lowerCaseInput = stringStr.toLowerCase();
-  // Filtrer les recettes qui correspondent à la requête
-  const result = listRecipes.filter((recipe) =>
-    recipe.ustensils.some((ustinsil) =>
-      ustinsil.toLowerCase().includes(lowerCaseInput)
-    )
-  );
+  const result = [];
+
+  for (let i = 0; i < listRecipes.length; i++) {
+    const recipe = listRecipes[i];
+    let ustensilFound = false;
+
+    for (let j = 0; j < recipe.ustensils.length; j++) {
+      if (recipe.ustensils[j].toLowerCase().includes(lowerCaseInput)) {
+        ustensilFound = true;
+        break;
+      }
+    }
+
+    if (ustensilFound) {
+      result.push(recipe);
+    }
+  }
 
   return result;
 }

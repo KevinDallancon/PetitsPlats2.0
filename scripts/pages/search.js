@@ -16,7 +16,7 @@ searchInput.addEventListener("input", function (e) {
     selectedIngredients,
     selectedUstensils,
     selectedAppliances,
-    filtredRecipes
+    filtredRecipes,
   );
   // Mettre à jour l'affichage avec les recettes filtrées
   displayData(filtredRecipes);
@@ -30,7 +30,7 @@ removeIcon.addEventListener("click", function () {
     selectedIngredients,
     selectedUstensils,
     selectedAppliances,
-    filtredRecipes
+    filtredRecipes,
   );
   displayData(filtredRecipes);
 });
@@ -45,8 +45,8 @@ function simpleSearch(inputValue, listRecipes) {
       recipe.name.toLowerCase().includes(lowerCaseInput) ||
       recipe.description.toLowerCase().includes(lowerCaseInput) ||
       recipe.ingredients.some((ingredient) =>
-        ingredient.ingredient.toLowerCase().includes(lowerCaseInput)
-      )
+        ingredient.ingredient.toLowerCase().includes(lowerCaseInput),
+      ),
   );
 
   return result;
@@ -56,7 +56,7 @@ function advancedSearch(
   listSelectedIngredients,
   listSelectedUstensiles,
   listSelectedAppareil,
-  listRecipes
+  listRecipes,
 ) {
   let listTemporaire = listRecipes;
   listSelectedIngredients.forEach((ingredient) => {
@@ -82,8 +82,8 @@ function searchByIngredients(stringStr, listRecipes) {
   // Filtrer les recettes qui correspondent à la requête
   const result = listRecipes.filter((recipe) =>
     recipe.ingredients.some((ingredient) =>
-      ingredient.ingredient.toLowerCase().includes(lowerCaseInput)
-    )
+      ingredient.ingredient.toLowerCase().includes(lowerCaseInput),
+    ),
   );
 
   return result;
@@ -93,7 +93,7 @@ function searchByAppliances(stringStr, listRecipes) {
   const lowerCaseInput = stringStr.toLowerCase();
   // Filtrer les recettes qui correspondent à la requête
   const result = listRecipes.filter((recipe) =>
-    recipe.appliance.toLowerCase().includes(lowerCaseInput)
+    recipe.appliance.toLowerCase().includes(lowerCaseInput),
   );
 
   return result;
@@ -104,8 +104,8 @@ function searchByUstinsiles(stringStr, listRecipes) {
   // Filtrer les recettes qui correspondent à la requête
   const result = listRecipes.filter((recipe) =>
     recipe.ustensils.some((ustinsil) =>
-      ustinsil.toLowerCase().includes(lowerCaseInput)
-    )
+      ustinsil.toLowerCase().includes(lowerCaseInput),
+    ),
   );
 
   return result;

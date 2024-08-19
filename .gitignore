@@ -1,2 +1,4 @@
-
-node_modules
+# Dossiers
+/assets/
+/docs/
+/node_modules/

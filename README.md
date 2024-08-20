@@ -20,6 +20,7 @@
 
 ## Structure du projet 📁
 
+```plaintext
 PETITSPLATS2.0/
 │
 ├── assets/
@@ -41,12 +42,24 @@ PETITSPLATS2.0/
 ├── README.md
 ├── styles.css
 └── tag.css
+```
 
 ## Installation et lancement 🚀
 
-1. Clonez le repository :
+1. Clonez le repository : https://github.com/KevinDallancon/PetitsPlats2.0.git
+2. Se déplacer dans le dossier du repo avec la commande suivante : cd PetitsPlats2.0
+3. Lancer le "go live"
    
 Le moteur de recherche a été implémenté avec deux approches différentes pour comparer les performances :
 
-1. **Approche avec boucles natives** : Utilisation de boucles `for` et `while`.
-2. **Approche fonctionnelle** : Utilisation de méthodes comme `filter`, `map`, et `reduce`.
+Branche NATIVE **Approche avec boucles natives** : Utilisation de boucles `for` et `while`.
+Branche MAIN. **Approche fonctionnelle** : Utilisation de méthodes comme `filter`, `map`, et `reduce`.
+
+Les performances de ces deux approches ont été comparées pour choisir la plus efficace.
+
+## Sécurité 🔒
+
+Une attention particulière a été portée à la sécurité, notamment :
+
+- Utilisation de `textContent` au lieu de `innerHTML` pour prévenir les injections XSS.
+- Validation et assainissement des entrées utilisateur.

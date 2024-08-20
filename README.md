@@ -49,7 +49,8 @@ PETITSPLATS2.0/
 1. Clonez le repository : https://github.com/KevinDallancon/PetitsPlats2.0.git
 2. Se déplacer dans le dossier du repo avec la commande suivante : cd PetitsPlats2.0
 3. Lancer le "go live"
-   
+
+## Performance ⚡
 Le moteur de recherche a été implémenté avec deux approches différentes pour comparer les performances :
 
 Branche NATIVE **Approche avec boucles natives** : Utilisation de boucles `for` et `while`.

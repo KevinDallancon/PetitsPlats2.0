@@ -122,78 +122,96 @@ function displaySetTag(
   listTagDom.innerHTML = ""; // Vider le contenu précédent
 
   for (const tag of tagSet) {
-    const div = document.createElement("div");
-    div.classList.add("tag-style");
-    div.textContent = capitalizeFirstLetter(tag);
-    div.setAttribute("data-tag-type", tagType); // Ajout de l'attribut data-tag-type
+    // Vérifier si le tag est déjà sélectionné
+    const isAlreadySelected =
+      (tagType === "ingredient" &&
+        selectedIngredients.some(
+          (item) => item.toLowerCase() === tag.toLowerCase()
+        )) ||
+      (tagType === "ustensil" &&
+        selectedUstensils.some(
+          (item) => item.toLowerCase() === tag.toLowerCase()
+        )) ||
+      (tagType === "appliance" &&
+        selectedAppliances.some(
+          (item) => item.toLowerCase() === tag.toLowerCase()
+        ));
 
-    // rendre la div cliquable et ajouter l'element dans tagSelectedList
-    div.addEventListener("click", function (e) {
-      e.preventDefault();
-      // cacher l'element selectionné de la liste
-      this.style.display = "none";
+    // Ne créer l'élément que si le tag n'est pas déjà sélectionné
+    if (!isAlreadySelected) {
+      const div = document.createElement("div");
+      div.classList.add("tag-style");
+      div.textContent = capitalizeFirstLetter(tag);
+      div.setAttribute("data-tag-type", tagType); // Ajout de l'attribut data-tag-type
 
-      // ajouter le tag en jaune au top
-      const divSelected = document.createElement("div");
-      divSelected.classList.add("tag-selected");
-      divSelected.textContent = this.textContent;
-      divSelected.setAttribute("data-tag-type", tagType); // Ajout de l'attribut data-tag-type
+      // rendre la div cliquable et ajouter l'element dans tagSelectedList
+      div.addEventListener("click", function (e) {
+        e.preventDefault();
+        // cacher l'element selectionné de la liste
+        this.style.display = "none";
 
-      // Créez une icône de croix
-      const icon = document.createElement("i");
-      icon.className = "fa fa-times";
-      divSelected.appendChild(icon);
+        // ajouter le tag en jaune au top
+        const divSelected = document.createElement("div");
+        divSelected.classList.add("tag-selected");
+        divSelected.textContent = this.textContent;
+        divSelected.setAttribute("data-tag-type", tagType); // Ajout de l'attribut data-tag-type
 
-      icon.addEventListener("click", function () {
-        deleteTag(divSelectedG, divSelected, div, tagType);
-      });
+        // Créez une icône de croix
+        const icon = document.createElement("i");
+        icon.className = "fa fa-times";
+        divSelected.appendChild(icon);
 
-      tagSelectedList.appendChild(divSelected);
+        icon.addEventListener("click", function () {
+          deleteTag(divSelectedG, divSelected, div, tagType);
+        });
 
-      const divSelectedG = document.createElement("div");
-      divSelectedG.classList.add("tag-selectedGeneral");
-      divSelectedG.textContent = this.textContent;
-      divSelectedG.setAttribute("data-tag-type", tagType); // Ajout de l'attribut data-tag-type
+        tagSelectedList.appendChild(divSelected);
 
-      // Créez une icône de croix
-      const iconTag = document.createElement("i");
-      iconTag.className = "fa fa-times";
-      divSelectedG.appendChild(iconTag);
+        const divSelectedG = document.createElement("div");
+        divSelectedG.classList.add("tag-selectedGeneral");
+        divSelectedG.textContent = this.textContent;
+        divSelectedG.setAttribute("data-tag-type", tagType); // Ajout de l'attribut data-tag-type
 
-      iconTag.addEventListener("click", function () {
-        deleteTag(divSelectedG, divSelected, div, tagType);
-      });
+        // Créez une icône de croix
+        const iconTag = document.createElement("i");
+        iconTag.className = "fa fa-times";
+        divSelectedG.appendChild(iconTag);
 
-      tagSelected.appendChild(divSelectedG);
+        iconTag.addEventListener("click", function () {
+          deleteTag(divSelectedG, divSelected, div, tagType);
+        });
 
-      ///
-      if (this.textContent.trim() !== "") {
-        const tagContent = this.textContent.trim();
-        const tagType = this.getAttribute("data-tag-type");
+        tagSelected.appendChild(divSelectedG);
 
-        // Ajouter ou retirer le tag de la liste appropriée
-        switch (tagType) {
-          case "ingredient":
-            updateSelectedList(selectedIngredients, tagContent);
-            break;
-          case "ustensil":
-            updateSelectedList(selectedUstensils, tagContent);
-            break;
-          case "appliance":
-            updateSelectedList(selectedAppliances, tagContent);
-            break;
-          default:
-            console.error(`Type de tag non reconnu : ${tagType}`);
-            return;
+        ///
+        if (this.textContent.trim() !== "") {
+          const tagContent = this.textContent.trim();
+          const tagType = this.getAttribute("data-tag-type");
+
+          // Ajouter ou retirer le tag de la liste appropriée
+          switch (tagType) {
+            case "ingredient":
+              updateSelectedList(selectedIngredients, tagContent);
+              break;
+            case "ustensil":
+              updateSelectedList(selectedUstensils, tagContent);
+              break;
+            case "appliance":
+              updateSelectedList(selectedAppliances, tagContent);
+              break;
+            default:
+              console.error(`Type de tag non reconnu : ${tagType}`);
+              return;
+          }
+
+          searchRecipes();
         }
 
-        searchRecipes();
-      }
+        ///
+      });
 
-      ///
-    });
-
-    listTagDom.appendChild(div);
+      listTagDom.appendChild(div);
+    }
   }
 }
 
@@ -235,6 +253,7 @@ function searchRecipes() {
     filtredRecipes
   );
   displayData(filtredRecipes);
+  updateAdvancedSearchFields(filtredRecipes);
 }
 
 // Fonction pour basculer l'affichage d'un dropdown

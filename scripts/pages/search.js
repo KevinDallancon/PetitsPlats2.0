@@ -70,6 +70,26 @@ function simpleSearch(inputValue, listRecipes) {
   return result;
 }
 
+function updateAdvancedSearchFields(filteredRecipes) {
+  ingredientsSet.clear();
+  ustensilesSet.clear();
+  appliancesSet.clear();
+
+  for (let i = 0; i < filteredRecipes.length; i++) {
+    const recipe = filteredRecipes[i];
+    for (let j = 0; j < recipe.ingredients.length; j++) {
+      const ingredient = recipe.ingredients[j];
+      ingredientsSet.add(ingredient.ingredient.toLowerCase());
+    }
+    for (let j = 0; j < recipe.ustensils.length; j++) {
+      ustensilesSet.add(recipe.ustensils[j].toLowerCase());
+    }
+    appliancesSet.add(recipe.appliance.toLowerCase());
+  }
+
+  displaySetTags();
+}
+
 function advancedSearch(
   listSelectedIngredients,
   listSelectedUstensiles,
@@ -94,7 +114,7 @@ function advancedSearch(
     // Vérifie si cet appareil existe dans la liste des recettes
     listTemporaire = searchByAppliances(appareil, listTemporaire);
   }
-
+  updateAdvancedSearchFields(listTemporaire);
   return listTemporaire;
 }
 

@@ -16,7 +16,7 @@ searchInput.addEventListener("input", function (e) {
     selectedIngredients,
     selectedUstensils,
     selectedAppliances,
-    filtredRecipes,
+    filtredRecipes
   );
   // Mettre à jour l'affichage avec les recettes filtrées
   displayData(filtredRecipes);
@@ -30,7 +30,7 @@ removeIcon.addEventListener("click", function () {
     selectedIngredients,
     selectedUstensils,
     selectedAppliances,
-    filtredRecipes,
+    filtredRecipes
   );
   displayData(filtredRecipes);
 });
@@ -45,10 +45,9 @@ function simpleSearch(inputValue, listRecipes) {
       recipe.name.toLowerCase().includes(lowerCaseInput) ||
       recipe.description.toLowerCase().includes(lowerCaseInput) ||
       recipe.ingredients.some((ingredient) =>
-        ingredient.ingredient.toLowerCase().includes(lowerCaseInput),
-      ),
+        ingredient.ingredient.toLowerCase().includes(lowerCaseInput)
+      )
   );
-
   return result;
 }
 
@@ -56,7 +55,7 @@ function advancedSearch(
   listSelectedIngredients,
   listSelectedUstensiles,
   listSelectedAppareil,
-  listRecipes,
+  listRecipes
 ) {
   let listTemporaire = listRecipes;
   listSelectedIngredients.forEach((ingredient) => {
@@ -74,7 +73,30 @@ function advancedSearch(
     listTemporaire = searchByAppliances(appliance, listTemporaire);
   });
 
+  // Mettre à jour les champs de recherche avancée
+  updateAdvancedSearchFields(listTemporaire);
+
   return listTemporaire;
+}
+
+// Nouvelle fonction pour mettre à jour les champs de recherche avancée
+function updateAdvancedSearchFields(recipes) {
+  // Réinitialiser les ensembles
+  ingredientsSet.clear();
+  ustensilesSet.clear();
+  appliancesSet.clear();
+
+  // Remplir les ensembles avec les données des recettes filtrées
+  recipes.forEach((recipe) => {
+    recipe.ingredients.forEach((ing) =>
+      ingredientsSet.add(ing.ingredient.toLowerCase())
+    );
+    recipe.ustensils.forEach((ust) => ustensilesSet.add(ust.toLowerCase()));
+    appliancesSet.add(recipe.appliance.toLowerCase());
+  });
+
+  // Mettre à jour l'affichage des tags
+  displaySetTags();
 }
 
 function searchByIngredients(stringStr, listRecipes) {
@@ -82,8 +104,8 @@ function searchByIngredients(stringStr, listRecipes) {
   // Filtrer les recettes qui correspondent à la requête
   const result = listRecipes.filter((recipe) =>
     recipe.ingredients.some((ingredient) =>
-      ingredient.ingredient.toLowerCase().includes(lowerCaseInput),
-    ),
+      ingredient.ingredient.toLowerCase().includes(lowerCaseInput)
+    )
   );
 
   return result;
@@ -93,7 +115,7 @@ function searchByAppliances(stringStr, listRecipes) {
   const lowerCaseInput = stringStr.toLowerCase();
   // Filtrer les recettes qui correspondent à la requête
   const result = listRecipes.filter((recipe) =>
-    recipe.appliance.toLowerCase().includes(lowerCaseInput),
+    recipe.appliance.toLowerCase().includes(lowerCaseInput)
   );
 
   return result;
@@ -104,15 +126,18 @@ function searchByUstinsiles(stringStr, listRecipes) {
   // Filtrer les recettes qui correspondent à la requête
   const result = listRecipes.filter((recipe) =>
     recipe.ustensils.some((ustinsil) =>
-      ustinsil.toLowerCase().includes(lowerCaseInput),
-    ),
+      ustinsil.toLowerCase().includes(lowerCaseInput)
+    )
   );
 
   return result;
 }
 
 function updateSelectedList(list, item) {
-  const index = list.indexOf(item);
+  const lowerCaseItem = item.toLowerCase();
+  const index = list.findIndex(
+    (listItem) => listItem.toLowerCase() === lowerCaseItem
+  );
   if (index === -1) {
     list.push(item);
   } else {

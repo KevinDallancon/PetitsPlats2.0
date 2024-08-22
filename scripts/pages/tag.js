@@ -3,39 +3,35 @@ const ingredientsSet = new Set();
 const ustensilesSet = new Set();
 const appliancesSet = new Set();
 
-// Listes pour stocker les tags sélectionnés
+// Tableaux pour stocker les éléments sélectionnés par l'utilisateur
 let selectedIngredients = [];
 let selectedUstensils = [];
 let selectedAppliances = [];
 
-// Fonction utilitaire pour capitaliser la première lettre
+// Function pour mettre en majascule la premiere lettre
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-// Fonction pour créer les ensembles de tags à partir des recettes
 function createSetTags(listRecipes) {
-  // Parcourir chaque recette pour extraire les ingrédients
-  listRecipes.forEach((recipe) => {
-    // remplir le set des ingredients
-    recipe.ingredients.forEach((ingredient) => {
+  for (let i = 0; i < listRecipes.length; i++) {
+    const recipe = listRecipes[i];
+    for (let i = 0; i < recipe.ingredients.length; i++) {
+      const ingredient = recipe.ingredients[i];
       const ingredientName = ingredient.ingredient.trim().toLowerCase();
       ingredientsSet.add(ingredientName);
-    });
-    // remplir le set des ustensils
-    recipe.ustensils.forEach((ustensile) => {
+    }
+    for (let i = 0; i < recipe.ustensils.length; i++) {
+      const ustensile = recipe.ustensils[i];
       const ustensileName = ustensile.trim().toLowerCase();
       ustensilesSet.add(ustensileName);
-    });
-
+    }
     const appareilName = recipe.appliance.trim().toLowerCase();
     appliancesSet.add(appareilName);
-  });
+  }
 }
-
-// Fonction pour afficher tous les tags dans leurs listes respectives
+// Fonction pour afficher tous les ensembles de tags
 function displaySetTags() {
-  // Afficher les tags d'ingrédients
   const ingredientList = document.getElementById("ingredientList");
   const ingredientsSelectedList = document.getElementById(
     "ingredientsSelectedList"
@@ -49,7 +45,6 @@ function displaySetTags() {
     "ingredient"
   );
 
-  // Afficher les tags d'appareils
   const appareilsList = document.getElementById("appareilsList");
   const appareilsSelectedList = document.getElementById(
     "appareilsSelectedList"
@@ -63,7 +58,6 @@ function displaySetTags() {
     "appliance"
   );
 
-  // Afficher les tags d'ustensiles
   const ustensilesList = document.getElementById("ustensilesList");
   const ustensilesSelectedList = document.getElementById(
     "ustensilesSelectedList"
@@ -118,7 +112,6 @@ function displaySetTags() {
     });
 }
 
-// Fonction principale pour afficher et gérer les tags
 function displaySetTag(
   listTagDom,
   tagSet,
@@ -128,80 +121,98 @@ function displaySetTag(
 ) {
   listTagDom.innerHTML = ""; // Vider le contenu précédent
 
-  tagSet.forEach((tag) => {
-    const div = document.createElement("div");
-    div.classList.add("tag-style");
-    div.textContent = capitalizeFirstLetter(tag);
-    div.setAttribute("data-tag-type", tagType); // Ajout de l'attribut data-tag-type
+  for (const tag of tagSet) {
+    // Vérifier si le tag est déjà sélectionné
+    const isAlreadySelected =
+      (tagType === "ingredient" &&
+        selectedIngredients.some(
+          (item) => item.toLowerCase() === tag.toLowerCase()
+        )) ||
+      (tagType === "ustensil" &&
+        selectedUstensils.some(
+          (item) => item.toLowerCase() === tag.toLowerCase()
+        )) ||
+      (tagType === "appliance" &&
+        selectedAppliances.some(
+          (item) => item.toLowerCase() === tag.toLowerCase()
+        ));
 
-    // rendre la div cliquable et ajouter l'element dans tagSelectedList
-    div.addEventListener("click", function (e) {
-      e.preventDefault();
-      // cacher l'element selectionné de la liste
-      this.style.display = "none";
+    // Ne créer l'élément que si le tag n'est pas déjà sélectionné
+    if (!isAlreadySelected) {
+      const div = document.createElement("div");
+      div.classList.add("tag-style");
+      div.textContent = capitalizeFirstLetter(tag);
+      div.setAttribute("data-tag-type", tagType); // Ajout de l'attribut data-tag-type
 
-      // ajouter le tag en jaune au top
-      const divSelected = document.createElement("div");
-      divSelected.classList.add("tag-selected");
-      divSelected.textContent = this.textContent;
-      divSelected.setAttribute("data-tag-type", tagType); // Ajout de l'attribut data-tag-type
+      // rendre la div cliquable et ajouter l'element dans tagSelectedList
+      div.addEventListener("click", function (e) {
+        e.preventDefault();
+        console.log(`Tag cliqué: ${this.textContent}, Type: ${tagType}`);
+        // cacher l'element selectionné de la liste
+        this.style.display = "none";
 
-      // Créez une icône de croix
-      const icon = document.createElement("i");
-      icon.className = "fa fa-times";
-      divSelected.appendChild(icon);
+        // ajouter le tag en jaune au top
+        const divSelected = document.createElement("div");
+        divSelected.classList.add("tag-selected");
+        divSelected.textContent = this.textContent;
+        divSelected.setAttribute("data-tag-type", tagType); // Ajout de l'attribut data-tag-type
 
-      icon.addEventListener("click", function () {
-        deleteTag(divSelectedG, divSelected, div, tagType);
-      });
+        // Créez une icône de croix
+        const icon = document.createElement("i");
+        icon.className = "fa fa-times";
+        divSelected.appendChild(icon);
 
-      tagSelectedList.appendChild(divSelected);
+        icon.addEventListener("click", function () {
+          deleteTag(divSelectedG, divSelected, div, tagType);
+        });
 
-      const divSelectedG = document.createElement("div");
-      divSelectedG.classList.add("tag-selectedGeneral");
-      divSelectedG.textContent = this.textContent;
-      divSelectedG.setAttribute("data-tag-type", tagType); // Ajout de l'attribut data-tag-type
+        tagSelectedList.appendChild(divSelected);
 
-      // Créez une icône de croix
-      const iconTag = document.createElement("i");
-      iconTag.className = "fa fa-times";
-      divSelectedG.appendChild(iconTag);
+        const divSelectedG = document.createElement("div");
+        divSelectedG.classList.add("tag-selectedGeneral");
+        divSelectedG.textContent = this.textContent;
+        divSelectedG.setAttribute("data-tag-type", tagType); // Ajout de l'attribut data-tag-type
 
-      iconTag.addEventListener("click", function () {
-        deleteTag(divSelectedG, divSelected, div, tagType);
-      });
+        // Créez une icône de croix
+        const iconTag = document.createElement("i");
+        iconTag.className = "fa fa-times";
+        divSelectedG.appendChild(iconTag);
 
-      tagSelected.appendChild(divSelectedG);
+        iconTag.addEventListener("click", function () {
+          deleteTag(divSelectedG, divSelected, div, tagType);
+        });
 
-      ///
-      if (this.textContent.trim() !== "") {
-        const tagContent = this.textContent.trim();
-        const tagType = this.getAttribute("data-tag-type");
+        tagSelected.appendChild(divSelectedG);
 
-        // Ajouter ou retirer le tag de la liste appropriée
-        switch (tagType) {
-          case "ingredient":
-            updateSelectedList(selectedIngredients, tagContent);
-            break;
-          case "ustensil":
-            updateSelectedList(selectedUstensils, tagContent);
-            break;
-          case "appliance":
-            updateSelectedList(selectedAppliances, tagContent);
-            break;
-          default:
-            console.error(`Type de tag non reconnu : ${tagType}`);
-            return;
+        ///
+        if (this.textContent.trim() !== "") {
+          const tagContent = this.textContent.trim();
+          const tagType = this.getAttribute("data-tag-type");
+
+          // Ajouter ou retirer le tag de la liste appropriée
+          switch (tagType) {
+            case "ingredient":
+              updateSelectedList(selectedIngredients, tagContent);
+              break;
+            case "ustensil":
+              updateSelectedList(selectedUstensils, tagContent);
+              break;
+            case "appliance":
+              updateSelectedList(selectedAppliances, tagContent);
+              break;
+            default:
+              console.error(`Type de tag non reconnu : ${tagType}`);
+              return;
+          }
+          searchRecipes();
         }
 
-        searchRecipes();
-      }
+        ///
+      });
 
-      ///
-    });
-
-    listTagDom.appendChild(div);
-  });
+      listTagDom.appendChild(div);
+    }
+  }
 }
 
 // Fonction pour supprimer un tag sélectionné
@@ -227,7 +238,7 @@ function deleteTag(divSelectedG, divSelected, div, tagType) {
   searchRecipes();
 }
 
-// Fonction principale de recherche et filtrage des recettes
+// Fonction pour rechercher des recettes basées sur les filtres actuels
 function searchRecipes() {
   filtredRecipes = recipes;
   if (document.querySelector(".search-input").value.length > 2)
@@ -242,9 +253,11 @@ function searchRecipes() {
     filtredRecipes
   );
   displayData(filtredRecipes);
+  // Ajout de cette ligne pour mettre à jour les champs de recherche avancée
+  updateAdvancedSearchFields(filtredRecipes);
 }
 
-// Fonction pour gérer l'ouverture/fermeture des dropdowns
+// Fonction pour basculer l'affichage d'un dropdown
 function toggleDropdown(dropdownId) {
   const dropdown = document.getElementById(dropdownId);
   const button = dropdown.previousElementSibling;
